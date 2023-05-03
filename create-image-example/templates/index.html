@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block title %}Index{% endblock %}
+
+
+{% block content %}
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <h1 style="text-align: left">Open AI API Demo</h1>
+        <br/>
+
+           <div>
+
+            <p> Provide your Open API Key here...we do not store it... </p>
+            <label for="api_key">Open API Key </label>
+            <input type="text" id="api_key" size="50"</input>
+            <button class="button" type="button" name="GenerateButton" onclick="getAndShowImage()">Generate</button>
+
+
+            </div>
+           <br/>
+          <div class="float-container"
+             <div class="row">
+                <div class="column">
+                  <textarea id="outputText" name="outputText" rows="10" cols="50" placeholder="Generated Prompt will appear here..."></textarea>
+                </div>
+                <div class="column">
+                    <img id="imageid" src="" alt="Image will show up here" <span></span>/>
+                </div>
+             </div>
+          </div>
+
+
+
+
+
+        <script type="text/javascript">
+
+
+        function getAndTranslateData() {
+          var clickable = "{{ url_for('translate_data') }}";
+          var data = {"inputText": $('#inputText').val(),
+                      "sourceLanguageCode":$('#sourceLanguageCodeDropdown').val(),
+                      };
+          var formData = JSON.stringify(data);
+
+          $.ajax({
+            type: "POST",
+            url: clickable,
+            data: formData,
+            contentType: 'application/json',
+            dataType: "json",
+            headers: {'Content-Type': 'application/json'},
+                 success: function(data) {
+                   console.log(data);
+                   var outputText = data.outputText;
+                   var outputTextEng = data.outputTextEng;
+                   $('#outputText').val(outputText);
+                   $('#outputTextEng').val(outputTextEng);
+                           },
+               error: function(xhr, status, error) {
+                 alert(status);
+                 alert(xhr.responseText);
+
+                   }
+              });
+
+        }
+
+        function getAndShowImage() {
+          var clickable = "{{ url_for('show_image') }}";
+          var data = {"api_key": $('#api_key').val()};
+          var formData = JSON.stringify(data);
+          $.blockUI({ message: "Wait for open api to return", overlayCSS: { backgroundColor: '#00f' } });
+          $.ajax({
+            type: "POST",
+            url: clickable,
+            data: formData,
+            contentType: 'application/json',
+            dataType: "json",
+            headers: {'Content-Type': 'application/json'},
+                 success: function(data) {
+                   $('#outputText').val(data.prompt);
+                   document.getElementById("imageid").src=data.image_url
+                   $.unblockUI();
+                           },
+               error: function(xhr, status, error) {
+                 alert(status);
+                 alert(xhr.responseText);
+                 console.log(xhr);
+                 console.log(error);
+                 $.unblockUI();
+                   }
+              });
+
+
+
+        }
+
+
+        </script>
+
+
+{% endblock %}

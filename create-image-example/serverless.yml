@@ -1,0 +1,33 @@
+service: openapi-demo
+provider:
+  name: aws
+  runtime: python3.8
+  stage: dev
+  region: ap-southeast-2
+  memorySize: 512
+  profile: ${self:custom.profiles.${sls:stage}}
+  iam:
+    role:
+      managedPolicies:
+        - "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+
+plugins:
+  - serverless-wsgi
+  - serverless-python-requirements
+  - serverless-apigw-binary
+custom:
+  profiles:
+    dev: modelapi
+    prod: modelapi
+  wsgi:
+    app: app.app
+  apigwBinary:
+    types:
+      - "*/*"
+
+functions:
+  app:
+    handler: wsgi_handler.handler
+    events:
+      - http: ANY /
+      - http: 'ANY {proxy+}'
