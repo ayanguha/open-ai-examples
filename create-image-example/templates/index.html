@@ -35,35 +35,7 @@
         <script type="text/javascript">
 
 
-        function getAndTranslateData() {
-          var clickable = "{{ url_for('translate_data') }}";
-          var data = {"inputText": $('#inputText').val(),
-                      "sourceLanguageCode":$('#sourceLanguageCodeDropdown').val(),
-                      };
-          var formData = JSON.stringify(data);
-
-          $.ajax({
-            type: "POST",
-            url: clickable,
-            data: formData,
-            contentType: 'application/json',
-            dataType: "json",
-            headers: {'Content-Type': 'application/json'},
-                 success: function(data) {
-                   console.log(data);
-                   var outputText = data.outputText;
-                   var outputTextEng = data.outputTextEng;
-                   $('#outputText').val(outputText);
-                   $('#outputTextEng').val(outputTextEng);
-                           },
-               error: function(xhr, status, error) {
-                 alert(status);
-                 alert(xhr.responseText);
-
-                   }
-              });
-
-        }
+        
 
         function getAndShowImage() {
           var clickable = "{{ url_for('show_image') }}";

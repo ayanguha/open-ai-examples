@@ -18,7 +18,7 @@ def home():
 def show_image():
     openai.api_key = request.json.get("api_key")
     response = openai.Completion.create(
-                      model="text-davinci-003",
+                      model=model,
                       prompt="generate one original weird photo creation idea",
                       max_tokens=100,
                       temperature=0.5
@@ -36,28 +36,7 @@ def show_image():
     print(result)
     return jsonify(result)
 
-@app.route('/translate', methods=['POST'])
-def translate_data():
-    inputText = request.json.get("inputText")
-    sourceLanguageCode = request.json.get('sourceLanguageCode')
-    translated_1 = translate.translate_text(Text=inputText,
-                                      SourceLanguageCode=sourceLanguageCode,
-                                      TargetLanguageCode="en")
-    translated_1_text = translated_1.get('TranslatedText')
 
-    gpt_response = translated_1_text
-    translated_2 = translate.translate_text(Text=gpt_response,
-                                      SourceLanguageCode="en",
-                                      TargetLanguageCode=sourceLanguageCode)
-    translated_2_text = translated_2.get('TranslatedText')
-
-    result = {'original_text': inputText,
-              'outputTextEng': gpt_response,
-              'outputText': translated_2_text,
-              }
-
-
-    return jsonify(result)
 
 def configure_app(flask_app):
     pass
