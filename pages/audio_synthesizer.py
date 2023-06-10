@@ -30,17 +30,18 @@ if uploaded_file is not None:
 
     transcribed_text = transcript['text']
 
-    st.markdown("### Trnscribed Text")
-    st.write(transcribed_text)
+    with st.expander("Transcribed Text"):
+        st.write(transcribed_text)
 
     prompt = transcribed_text + "\n \n Tl;dr"
-    
+
     model = 'text-davinci-003'
 
     response = openai.Completion.create(model=model,prompt = prompt,max_tokens=100)
     summarized_text = response['choices'][0]['text']
-    st.markdown("### Summarized Text")
-    st.write(summarized_text)
+
+    with st.expander("Summarized Text"):
+        st.write(summarized_text)
 
 
 
