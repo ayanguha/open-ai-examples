@@ -13,4 +13,4 @@ https://ayanguha-open-ai-examples-app-7lse9y.streamlit.app/
 - Create a python virtual environment
 - Install Python dependencies `pip install requirements.txt`
 - Run streamlit locally
-- Deploy in `Streamlit` Share as an app 
+- Deploy in `Streamlit` Share as an app
