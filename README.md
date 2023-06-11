@@ -6,7 +6,7 @@ This is a set of examples created to explore OpenAI API functionalities. Refer: 
 
 
 ## Deployed Example:
-https://ayanguha-open-ai-examples-app-7lse9y.streamlit.app/
+https://ayanguha-open-ai-examples-app-aoexdd.streamlit.app/
 
 ## How to deploy
 - Clone this repo
