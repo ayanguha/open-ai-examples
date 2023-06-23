@@ -204,3 +204,4 @@ cython_debug/
 
 
 trove_digitised_books_all.csv
+.chroma/ 
