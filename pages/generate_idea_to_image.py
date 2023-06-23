@@ -6,7 +6,7 @@ import time
 import requests, base64
 import os
 
-model = 'text-davinci-003'
+model = 'gpt-3.5-turbo'
 engine_id = "stable-diffusion-v1-5"
 
 def stability_image_gen(api_key, prompt, engine_id = "stable-diffusion-v1-5"):
