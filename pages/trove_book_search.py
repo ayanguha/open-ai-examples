@@ -11,7 +11,7 @@ import os, time
 print(os.path.dirname(os.path.realpath(__file__)))
 print(os.listdir())
 
-model = 'gpt-3.5-turbo'
+model = 'text-davinci-003'
 
 st.set_page_config(page_title="Trove Book Search", page_icon="")
 
@@ -33,7 +33,7 @@ This example uses following Langchain functionalities:
 
 loader = CSVLoader(file_path="trove_digitised_books.csv")
 documents = loader.load()
-text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
+text_splitter = CharacterTextSplitter(separator = "\n\n", chunk_size=1000, chunk_overlap=0)
 texts = text_splitter.split_documents(documents)
 
 
@@ -59,7 +59,7 @@ docs = docsearch.similarity_search_with_score(query)
 st.markdown("### Result of Vector Search ")
 st.write(docs)
 
-qa = RetrievalQA.from_chain_type(llm=OpenAI(openai_api_key=api_key_oi),
+qa = RetrievalQA.from_chain_type(llm=OpenAI(openai_api_key=api_key_oi, model=model),
                                  chain_type="stuff",
                                  retriever=docsearch.as_retriever())
 

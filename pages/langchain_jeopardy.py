@@ -7,7 +7,7 @@ from langchain.output_parsers import StructuredOutputParser, ResponseSchema
 import streamlit as st
 import time
 
-model = 'gpt-3.5-turbo'
+model = 'text-davinci-003'
 
 st.set_page_config(page_title="Jeopardy using Langchain", page_icon="")
 

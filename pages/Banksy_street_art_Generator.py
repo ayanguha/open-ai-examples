@@ -6,7 +6,7 @@ import time
 import requests, base64
 import os
 
-model = 'text-davinci-003'
+model = 'gpt-3.5-turbo'
 engine_id = "stable-diffusion-v1-5"
 
 def stability_image_gen(api_key, prompt, engine_id = "stable-diffusion-v1-5"):
@@ -62,13 +62,19 @@ while not api_key_sb:
 
 openai.api_key = api_key_oi
 
-response = openai.Completion.create(
-                  model=model,
-                  prompt="generate one original weird photo creation idea",
-                  max_tokens=100,
-                  temperature=0.5
-                    )
-prompt = response['choices'][0]['text']
+
+completion = openai.ChatCompletion.create(
+  model=model,max_tokens=100,
+  messages=[
+    {"role": "system",
+    "content": "You are a creative art designer."},
+    {"role": "user",
+    "content": "Generate one original excellent photo idea inspired by work of street artist Banksy"},
+
+  ]
+)
+#prompt = response['choices'][0]['text']
+prompt = completion.choices[0].message['content']
 
 st.write(prompt)
 

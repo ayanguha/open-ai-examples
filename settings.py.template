@@ -1,0 +1,11 @@
+from langchain import OpenAI, LLMChain, SQLDatabase, SQLDatabaseChain
+
+
+SNOWFLAKE_USER='<user>'
+SNOWFLAKE_PASSWORD='<password>'
+SNOWFLAKE_ORG_ID='<org>'
+SNOWFLAKE_ACCOUNT='<account>'
+
+
+db = SQLDatabase.from_uri(f'snowflake://{SNOWFLAKE_USER}:{SNOWFLAKE_PASSWORD}@{SNOWFLAKE_ORG_ID}-{SNOWFLAKE_ACCOUNT}/SNOWFLAKE_SAMPLE_DATA/TPCH_SF1')
+## db = SQLDatabase.from_uri('snowflake://redclockeducation:aA23553943!!@elzyrnz-mp05565/SNOWFLAKE_SAMPLE_DATA/TPCH_SF1')
