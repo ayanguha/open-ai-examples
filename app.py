@@ -7,11 +7,6 @@ st.set_page_config(
 
 st.write("# Welcome to LLM Generative AI Demos.")
 sidebar_container = st.sidebar.container()
-with sidebar_container:
-   st.write("")
-   st.write("")
-   st.write("")
-   st.write("")
 
 st.sidebar.info("Select a demo from sidebar.")
 
