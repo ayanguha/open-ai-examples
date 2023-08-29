@@ -39,7 +39,7 @@ It uses API from `Stability AI`: https://platform.stability.ai/rest-api to modif
 st.sidebar.header("Modify Image Demo")
 
 
-engine_id = "stable-diffusion-v1-5"
+engine_id = "stable-diffusion-xl-1024-v1-0"
 st.write(
     """This demo illustrates how to modify an image using stability diffucion model. Enjoy!"""
 )
