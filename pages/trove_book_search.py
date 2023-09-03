@@ -1,9 +1,11 @@
-from langchain.chains import RetrievalQA
+from langchain.chains import RetrievalQA, ConversationalRetrievalChain
 from langchain.document_loaders import CSVLoader
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.llms import OpenAI
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.vectorstores import Chroma
+from langchain.memory import ConversationBufferMemory
+from langchain.chat_models import ChatOpenAI
 
 import streamlit as st
 import os, time
@@ -11,7 +13,7 @@ import os, time
 print(os.path.dirname(os.path.realpath(__file__)))
 print(os.listdir())
 
-model = 'text-davinci-003'
+
 
 st.set_page_config(page_title="Trove Book Search", page_icon="")
 
@@ -46,7 +48,7 @@ while not api_key_oi:
 
 embeddings = OpenAIEmbeddings(openai_api_key=api_key_oi)
 with st.spinner('Embedding...'):
-    docsearch = Chroma.from_documents(texts, embeddings)
+    vectorstore = Chroma.from_documents(texts, embeddings)
 
 st.write("Embedding Completed...")
 
@@ -54,21 +56,22 @@ query = st.text_input(label="Provide search string..")
 while not query:
     time.sleep(3)
 
-docs = docsearch.similarity_search_with_score(query)
+
+docs = vectorstore.similarity_search_with_score(query)
 
 st.markdown("### Result of Vector Search ")
 st.write(docs)
 
-qa = RetrievalQA.from_chain_type(llm=OpenAI(openai_api_key=api_key_oi, model=model),
-                                 chain_type="stuff",
-                                 retriever=docsearch.as_retriever())
+qa = ConversationalRetrievalChain.from_llm(OpenAI(temperature=0, openai_api_key=api_key_oi),
+                                           vectorstore.as_retriever(),
+                                           condense_question_llm = ChatOpenAI(openai_api_key=api_key_oi, temperature=0, model='gpt-3.5-turbo'),)
+chat_history = []
+result = qa({"question": query, "chat_history": chat_history})
 
 
-res = qa.run(query)
+
 st.markdown("### Result of LLM ")
-st.write(res)
-
-
+st.write(result['answer'])
 
 
 
